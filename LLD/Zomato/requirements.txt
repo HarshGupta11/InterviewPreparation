@@ -1,0 +1,48 @@
+## Functional Requirements
+1. User should be able to add items in a cart and place order.
+2. Restaurant should get notified about the order.
+3. (Optional) Delivery driver should get notified about the order.
+4. Restaurant can update the menu as required to mark out of stock items
+5. User should be able to see nearby restaurants and search nearby restaurants
+
+## Non Functional Requirements
+1. System should be available.
+2. System should be eventual consistent. If item is out of stock, they will be given a option to replace it with some other item.
+3. Notifications should be in near realtime (bit of delay is acceptable)
+
+---
+
+## Implementation Details
+
+### Design Patterns Used
+1. **Observer Pattern** - Order (Observable) notifies Restaurant and User (Observers) on order events
+2. **Singleton Pattern** - RestaurantManager and OrderManager use thread-safe double-checked locking
+
+### Classes (all in Zomato.java)
+| Class | Role |
+|-------|------|
+| `MenuItem` | Model - item name, price, availability |
+| `Menu` | Holds List<MenuItem>, display/add/remove |
+| `Restaurant` | Entity with menu; Observer for order notifications |
+| `RestaurantManager` | Singleton managing all restaurants; search support |
+| `Cart` | User's cart; single-restaurant constraint; quantity management |
+| `User` | Entity with cart; Observer for order status updates |
+| `Order` | Observable base class with status lifecycle |
+| `DeliveryOrder` | Extends Order with delivery address |
+| `PickupOrder` | Extends Order with estimated pickup time |
+| `OrderManager` | Singleton; validates cart → places order → notifies observers |
+| `Zomato` | Public orchestrator with main() demo |
+
+### Enums
+- `OrderStatus`: PLACED → CONFIRMED → PREPARING → OUT_FOR_DELIVERY → DELIVERED / CANCELLED
+- `PaymentStatus`: PENDING, PAID, FAILED, REFUNDED
+- `OrderType`: DELIVERY, PICKUP
+
+### How to Run
+```bash
+javac Zomato.java && java Zomato
+```
+
+
+
+
