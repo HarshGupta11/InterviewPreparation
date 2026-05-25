@@ -1,0 +1,13 @@
+## Functional Requirements
+1. We can add new coupons at runtime
+2. Both cart level and product level discounts
+3. Support multiple coupon types (season offer, loyality discounts, banking discounts, etc)
+4. Suppor flat & percentage discount. (includes discount with cap limit as well)
+5. One coupon can/can not be applied on top of other coupons.
+6. Thread safe (example - first 4 people only get discount with coupon)
+
+## Non Functional Requirements
+1. The system should be play and pluggable
+2. The system should be extendable and scalable.
+
+
